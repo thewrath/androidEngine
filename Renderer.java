@@ -1,10 +1,13 @@
 package fr.game.epis.engine.core;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -36,17 +39,6 @@ public class Renderer {
         }
     }
 
-    public void draw(){
-        //test
-        this.pushRenderer();
-            if(this.surfaceHolder.getSurface().isValid()&& !this.lockRenderer) {
-                this.getPaint().setColor(Color.argb(255, 249, 129, 0));
-                this.getPaint().setTextSize(45);
-                this.canvas.drawText("char", 10, 10, this.paint);
-            }
-        this.popRenderer();
-    }
-
     public void popRenderer(){
         if(!this.lockRenderer){
             if (this.surfaceHolder.getSurface().isValid()){
@@ -54,6 +46,15 @@ public class Renderer {
                 this.surfaceHolder.unlockCanvasAndPost(this.canvas);
             }
         }
+    }
+
+
+    public void draw(Bitmap texture, float x, float y){
+        this.canvas.drawBitmap(texture, x, y, this.paint);
+    }
+
+    public void draw(Bitmap texture, Rect rectangle, RectF rectangleFrame){
+        this.canvas.drawBitmap(texture, rectangle, rectangleFrame, this.paint);
     }
 
     public Canvas getCanvas() {
